@@ -1,6 +1,9 @@
-const WorkTable = () => {
+import { preconnect } from "react-dom";
+import Work from "../work/Work";
+
+const WorkTable = (props) => {
     return(
-        <table className="tabel table-bordered table-striped">
+        <table className="table table-bordered table-striped">
             <thead>
                 <th>Data</th>
                 <th>Klieantas</th>
@@ -12,7 +15,16 @@ const WorkTable = () => {
                 <th>Salinti</th>
             </thead>
             <tbody>
-                
+                {props.data?.map(work=><Work
+                    id={work.id}
+                    date={work.date}
+                    company={work.company}
+                    service={work.service}
+                    description={work.description}
+                    from={work.from}
+                    to={work.to}
+                />
+            )}
             </tbody>
         </table>
     )

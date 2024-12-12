@@ -1,6 +1,9 @@
 import { useState } from "react";
+import * as service from "../../services/worksCrudServices";
+import { useNavigate } from "react-router-dom";
 
 const AddWork = () => {
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({
         data:'',
         company:'',
@@ -11,11 +14,17 @@ const AddWork = () => {
     })
     
     const handleChange = (e) => {
-        e.preventDefaul();
+        e.preventDefault();
         setFormData({
             ...formData,
             [e.target.name]:e.target.value
         })
+    }
+
+    const submitHandler = (e) => {
+        e.preventDefault();
+        service.addWork(formData)
+        navigate('/');
     }
 
     return(
@@ -24,20 +33,19 @@ const AddWork = () => {
                 <h2>Prideti atlikta darba</h2>
             </div>
             <div className="card-body">
-                <form className="form">
+                <form className="form" onSubmit={submitHandler}>
                     <div className="mb-3">
                         <label htmlFor="date">Pasirinkite data</label>
-                        <input type="date" name="date" className="form-control" onChange={handleChange} value={formData.data}/>
+                        <input type="date" name="data" className="form-control" onChange={handleChange} value={formData.data}/>
                     </div>
                     <div className="mb-3">
                        <select name="service" className="form-control" onChange={handleChange} value={formData.service}>
-                            <option selected disabled>Pasirinkite paslauga</option>
                             <option value="dev">Development</option>
                             <option value="ux">Ux research</option>
                        </select>
                    </div>
                     <div className="mb-3">
-                       <textarea name="desctiption" className="form-control" onChange={handleChange} value={formData.description}></textarea>
+                       <textarea name="description" className="form-control" onChange={handleChange} value={formData.description}></textarea>
                     </div>
                     <div className="mb-3">
                         <label htmlFor="from">From:</label>
