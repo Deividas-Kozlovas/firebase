@@ -17,3 +17,10 @@ export const getAllWorks = (onWorksChange) => {
         onWorksChange(newWork);
     })
 }
+
+export const deleteWork = (id) => {
+    firebase.firestore()
+    .collection('works')
+    .doc(id)
+    .delete()
+}
