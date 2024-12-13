@@ -1,10 +1,14 @@
 import { useEffect, useState } from "react";
 import * as service from "../../services/worksCrudServices";
 import { useNavigate, useParams } from "react-router-dom";
+import { auth } from "../../services/AuthServices";
+import { userAuthState} from "react-firebase-hooks/auth";
 
 const AddWork = () => {
   const navigate = useNavigate();
   const { id } = useParams();
+  xonst [user, loading, error] = userAuthState(auth)
+
   const [formData, setFormData] = useState({
     data: "",
     company: "",
@@ -12,6 +16,7 @@ const AddWork = () => {
     description: "",
     from: "",
     to: "",
+    uid: "",
   });
 
   const handleChange = (e) => {
@@ -27,7 +32,10 @@ const AddWork = () => {
     if (id) {
       service.updateWork(id, formData);
     } else {
-      service.addWork(formData);
+      service.addWork(
+        ...formData,
+        uid: user.id
+      );
     }
     navigate("/");
   };

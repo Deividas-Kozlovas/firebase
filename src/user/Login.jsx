@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { auth, registerWithEmailAndPassword } from "../services/AuthServices";
+import { auth, signInWithEmailAndPassword } from "../services/AuthServices";
 import { Link, useNavigate } from "react-router-dom";
 
-const Register = () => {
+const Login = () => {
   const [userData, setUserData] = useState({
-    name: "",
     email: "",
     password: "",
   });
@@ -31,11 +30,7 @@ const Register = () => {
       alert("Please fill in all fields.");
       return;
     }
-    registerWithEmailAndPassword(
-      userData.name,
-      userData.email,
-      userData.password
-    );
+    signInWithEmailAndPassword(userData.email, userData.password);
   };
 
   return (
@@ -88,15 +83,12 @@ const Register = () => {
         </div>
         <div className="mb-3">
           <button type="submit" className="btn btn-primary w-100">
-            Register
+            Prisijungti
           </button>
         </div>
       </form>
-      <div className="text-center">
-        <Link to="/login">Already have an account? Log in</Link>
-      </div>
     </div>
   );
 };
 
-export default Register;
+export default Login;
